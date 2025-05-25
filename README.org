@@ -1,14 +1,17 @@
 
 * PROJECT : A Minimalist Metaobject Protocol for PROLOG
 
-I wrote this 'project' (a portmanteau of PROLOG and Object) because I was tired of writing boilerplate over and over in PROLOG for what were essentially objects.
+I wrote this 'project' (a portmanteau of PROLOG and Object) because
 
-Logtalk doesn't support qsave very well, which I generally make extensive use of (DON'T WRITE DEAD SYSTEMS! Seriously).
+1. I was tired of writing boilerplate over and over in PROLOG for what were essentially objects.
 
-I really missed having a metaobject protocol a la Common Lisp's.
+2. Logtalk doesn't support qsave very well, which I generally make extensive use of (DON'T WRITE DEAD SYSTEMS! Seriously).
 
-I was frustrated by XPCE's lack of decent tooling, as well as its object system not being sufficiently introspective.
+3. I was frustrated by XPCE's lack of decent tooling, as well as its object system not being sufficiently introspective, as are many other declarative object systems.
 
-I wanted something lightweight + easy to understand for an expert user. This is about as simple as you can get IMO. 
+4. I wanted something lightweight + easy to understand for an expert user.
+
+
+This is about as simple as you can get IMO.
 
 Base image provided.
