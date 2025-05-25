@@ -1,5 +1,7 @@
 :- module(core, [call_slot/1, slot/3]).
 
+:- use_module(library(gensym)).
+
 :- dynamic(slot/3).
 
 %% call_slot is a dispatch shell, in the future we can flesh it out and provide more hooks, as well as allowing new metaobjects to define their own call_slot capabilities.

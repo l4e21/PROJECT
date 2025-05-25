@@ -153,7 +153,8 @@ make_deck(DeckID) :-
                                                                              call_slot(last_shown(F2, LS2)),
                                                                              (chinese_example:before(LS1, LS2), CardID5 = F1
                                                                              ; CardID5 = F2))),
-                           (oldest_flashcard(Self, CardID4, [CardID4]), true)
+                           (oldest_flashcard(Self, CardID4, [CardID4]), true),
+                           (show_next(Self, CardID5, Char), (call_slot(oldest_flashcard(Self, CardID5)), call_slot(show(CardID5, Char))))
                            
                        ],
                        DeckID)).
@@ -172,19 +173,8 @@ flashcard_answer_update_example(ID, Date, Time, Date2, Time2) :-
     call_slot(last_answered(obj_2, A)), call_slot(time_term(A, Date2, Time2)).
 
 % ?- deck_example(DeckID), call_slot(oldest_flashcard(DeckID, Oldest)).
-%@ Correct to: "chinese_example:deck_example(DeckID)"? yes
-%@ Correct to: "core:call_slot(oldest_flashcard(DeckID,Oldest))"? yes
-%@ DeckID = obj_5,
-%@ Oldest = obj_2 ;
-%@ false.
 
 % ?- flashcard_answer_update_example(ID, Date, Time, Date2, Time2).
-%@ Correct to: "chinese_example:flashcard_answer_update_example(ID,Date,Time,Date2,Time2)"? yes
-%@ ID = obj_7,
-%@ Date = 2000/1/1,
-%@ Time = 0:0,
-%@ Date2 = 2025/5/25,
-%@ Time2 = 22:20 .
 
 % ?- qsave_program("../../chinese_flashcards", [stand_alone(true)]).
 %@ % Disabled autoloading (loaded 48 files)
