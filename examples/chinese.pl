@@ -68,6 +68,32 @@ now(ID) :-
     date_time_value(minute, DateTime, Min),
     make_time(Yr/Month/Day, Hr:Min, ID).
 
+before(T1, T2) :-
+    call_slot(time_term(T1, Date1, Time1)),
+    call_slot(time_term(T2, Date2, Time2)),
+    before(Date1, Time1, Date2, Time2).
+
+before(Yr1/_/_, _:_, Yr2/_/_, _:_) :-
+    Yr1 #< Yr2.
+before(Yr1/Month1/_, _:_, Yr2/Month2/_, _:_) :-
+    Yr1 #= Yr2,
+    Month1 #< Month2.
+before(Yr1/Month1/Day1, _:_, Yr2/Month2/Day2, _:_) :-
+    Yr1 #= Yr2,
+    Month1 #= Month2,
+    Day1 #< Day2.
+before(Yr1/Month1/Day1, Hr1:_, Yr2/Month2/Day2, Hr2:_) :-
+    Yr1 #= Yr2,
+    Month1 #= Month2,
+    Day1 #= Day2,
+    Hr1 #< Hr2.
+before(Yr1/Month1/Day1, Hr1:Min1, Yr2/Month2/Day2, Hr2:Min2) :-
+    Yr1 #= Yr2,
+    Month1 #= Month2,
+    Day1 #= Day2,
+    Hr1 #= Hr2,
+    Min1 #< Min2.
+
 % ?- chinese_example:now(ID), call_slot(year(ID, Yr)).
 
 make_flashcard(English, Pinyin, Character, CardID) :-
@@ -79,25 +105,77 @@ make_flashcard(English, Pinyin, Character, CardID) :-
                            (character(Self, Character), true),
                            
                            (last_answered(Self, DefaultTimeID), true),
+                           (last_shown(Self, DefaultTimeID), true),
                            (correct_answers(Self, 0), true),
-                           (card(Self, true), true),
+                           (card(Self), true),
 
                            (answer(Self),
-                            (chinese_example:now(NowID),
-                             call_slot(make_slots(root, Self, [(last_answered(_SelfAux, NowID), true)]))))
+                            (chinese_example:now(NowID1),
+                             call_slot(correct_answers(Self, N)),
+                             N1 is N + 1,
+                             call_slot(make_slots(root, Self, [(last_answered(SelfAux, NowID1), true),
+                                                               (correct_answers(SelfAux, N1), true)])))),
+                           (show(Self, ToShow),
+                            (call_slot(character(Self, ToShow)),
+                             chinese_example:now(NowID2),
+                             call_slot(make_slots(root, Self, [(last_shown(_SelfAux, NowID2), true)]))))
                        ],
                       CardID)).
 
+flashcards(FlashcardIDs) :-
+    findall(FlashcardID,
+            slot(FlashcardID, card(_Self), true),
+            FlashcardIDs).
 
+oldest_flashcard(FlashcardID) :-
+    flashcards(FlashcardIDs),
+    oldest_flashcard(FlashcardID, FlashcardIDs).
+
+oldest_flashcard(FlashcardID, [FlashcardID]).
+oldest_flashcard(Oldest, [FlashcardID|Flashcards]) :-
+    oldest_flashcard(FlashcardID2, Flashcards),
+    call_slot(last_shown(FlashcardID, LastShownID)),
+    call_slot(last_shown(FlashcardID2, LastShownID2)),
+    (before(LastShownID, LastShownID2)
+    -> Oldest = FlashcardID
+    ; Oldest = FlashcardID2).
+    
 
 % ?- make_flashcard(person, rén, 人, ID), call_slot(last_answered(ID, LastAnsweredTimeID)), call_slot(time_term(LastAnsweredTimeID, Date, Time)).
+%@ Correct to: "chinese_example:make_flashcard(person,rén,人,ID)"? yes
+%@ Correct to: "core:call_slot(last_answered(ID,LastAnsweredTimeID))"? yes
+%@ Correct to: "core:call_slot(time_term(LastAnsweredTimeID,Date,Time))"? yes
+%@ ID = obj_2,
+%@ LastAnsweredTimeID = obj_1,
+%@ Date = 2000/1/1,
+%@ Time = 0:0.
+
+% ?- call_slot(show(obj_2, Hanzi)).
+%@ Correct to: "core:call_slot(show(obj_2,Hanzi))"? yes
+%@ Hanzi = 人.
 
 % ?- call_slot(answer(obj_2)).
 
 % ?- call_slot(last_answered(obj_2, A)), call_slot(time_term(A, Date, Time)).
+%@ Correct to: "core:call_slot(last_answered(obj_2,A))"? yes
+%@ Correct to: "core:call_slot(time_term(A,Date,Time))"? yes
+%@ A = obj_1,
+%@ Date = 2000/1/1,
+%@ Time = 0:0.
 
+% ?- call_slot(last_shown(obj_2, A)), call_slot(time_term(A, Date, Time)).
+%@ Correct to: "core:call_slot(last_shown(obj_2,A))"? yes
+%@ Correct to: "core:call_slot(time_term(A,Date,Time))"? yes
+%@ A = obj_3,
+%@ Date = 2025/5/25,
+%@ Time = 21:35.
+
+% ?- flashcards(FlashcardIDs).
+
+% ?- oldest_flashcard(ID).
 
 % ?- qsave_program("../../chinese_flashcards", [stand_alone(true)]).
-%@ % Disabled autoloading (loaded 39 files)
+%@ % Disabled autoloading (loaded 48 files)
+%@ % Disabled autoloading (loaded 4 files)
 %@ % Disabled autoloading (loaded 0 files)
 %@ true.
