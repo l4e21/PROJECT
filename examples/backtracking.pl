@@ -16,4 +16,5 @@ backtracking_object_init(ObjID) :-
 %@ _ObjID = obj_1,
 %@ X = 2 ;
 %@ _ObjID = obj_1,
-%@ X = 3.
+%@ X = 3 ;
+%@ false.

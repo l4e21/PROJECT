@@ -33,4 +33,5 @@ make_card(FactoryID, CardID, CardSlots) :-
 %@ FactoryID = obj_1,
 %@ FactorySlots = [make_card(_, _A, _B)-call_slot(make_obj(root, [(card_name(_, _B), true)], _A))],
 %@ CardID = obj_2,
-%@ CardSlots = [card_name(_, ren2)-true].
+%@ CardSlots = [card_name(_, ren2)-true] ;
+%@ false.

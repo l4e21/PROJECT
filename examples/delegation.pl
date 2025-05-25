@@ -19,5 +19,6 @@ fido_init(DogID, FidoID) :-
 %@ Correct to: "core:call_slot(woof(FidoID))"? yes
 %@ obj_2": woof!"
 %@ DogID = obj_1,
-%@ FidoID = obj_2.
+%@ FidoID = obj_2 ;
+%@ false.
 

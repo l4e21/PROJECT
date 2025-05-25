@@ -8,8 +8,8 @@ call_slot(SlotHead) :-
     call_slot(ID, SlotHead).
     
 call_slot(CallerID, SlotHead) :-
-    (slot(CallerID, SlotHead, Body)
-    -> Body
+    (slot(CallerID, SlotHead, Body),
+     call(Body)
     ; (slot(CallerID, inherits(CallerID, InheritsID), Body),
        Body,
        call_slot(InheritsID, SlotHead))).

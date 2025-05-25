@@ -120,59 +120,71 @@ make_flashcard(English, Pinyin, Character, CardID) :-
                              chinese_example:now(NowID2),
                              call_slot(make_slots(root, Self, [(last_shown(_SelfAux, NowID2), true)]))))
                        ],
-                      CardID)).
+                       CardID)).
 
 flashcards(FlashcardIDs) :-
     findall(FlashcardID,
             slot(FlashcardID, card(_Self), true),
             FlashcardIDs).
 
-oldest_flashcard(FlashcardID) :-
-    flashcards(FlashcardIDs),
-    oldest_flashcard(FlashcardID, FlashcardIDs).
+%% oldest_flashcard(FlashcardID) :-
+%%     flashcards(FlashcardIDs),
+%%     oldest_flashcard(FlashcardID, FlashcardIDs).
 
-oldest_flashcard(FlashcardID, [FlashcardID]).
-oldest_flashcard(Oldest, [FlashcardID|Flashcards]) :-
-    oldest_flashcard(FlashcardID2, Flashcards),
-    call_slot(last_shown(FlashcardID, LastShownID)),
-    call_slot(last_shown(FlashcardID2, LastShownID2)),
-    (before(LastShownID, LastShownID2)
-    -> Oldest = FlashcardID
-    ; Oldest = FlashcardID2).
-    
+%% oldest_flashcard(FlashcardID, [FlashcardID]).
+%% oldest_flashcard(Oldest, [FlashcardID|Flashcards]) :-
+%%     oldest_flashcard(FlashcardID2, Flashcards),
+%%     call_slot(last_shown(FlashcardID, LastShownID)),
+%%     call_slot(last_shown(FlashcardID2, LastShownID2)),
+%%     (before(LastShownID, LastShownID2)
+%%     -> Oldest = FlashcardID
+%%     ; Oldest = FlashcardID2).
 
-% ?- make_flashcard(person, rén, 人, ID), call_slot(last_answered(ID, LastAnsweredTimeID)), call_slot(time_term(LastAnsweredTimeID, Date, Time)).
-%@ Correct to: "chinese_example:make_flashcard(person,rén,人,ID)"? yes
-%@ Correct to: "core:call_slot(last_answered(ID,LastAnsweredTimeID))"? yes
-%@ Correct to: "core:call_slot(time_term(LastAnsweredTimeID,Date,Time))"? yes
-%@ ID = obj_2,
-%@ LastAnsweredTimeID = obj_1,
+
+make_deck(DeckID) :-
+    call_slot(make_obj(root,
+                       [
+                           (add_card(Self, CardID1), call_slot(make_slots(root, Self, [(card(_SelfAux, CardID1), true)]))),
+                           (all_cards(Self, CardIDs2), findall(CardID2, call_slot(card(Self, CardID2)), CardIDs2)),
+                           (oldest_flashcard(Self, CardID3), (call_slot(all_cards(Self, CardIDs3)),
+                                                             call_slot(oldest_flashcard(Self, CardID3, CardIDs3)))),
+                           (oldest_flashcard(Self, CardID5, [F1|CardIDs5]), (call_slot(oldest_flashcard(Self, F2, CardIDs5)),
+                                                                             call_slot(last_shown(F1, LS1)),
+                                                                             call_slot(last_shown(F2, LS2)),
+                                                                             (chinese_example:before(LS1, LS2), CardID5 = F1
+                                                                             ; CardID5 = F2))),
+                           (oldest_flashcard(Self, CardID4, [CardID4]), true)
+                           
+                       ],
+                       DeckID)).
+
+deck_example(DeckID) :-
+    make_flashcard(card1, pinyin1, char1, CardID),
+    make_flashcard(card2, pinyin2, char2, CardID2),
+    make_deck(DeckID),
+    call_slot(add_card(DeckID, CardID)),
+    call_slot(add_card(DeckID, CardID2)).
+
+flashcard_answer_update_example(ID, Date, Time, Date2, Time2) :-
+    make_flashcard(person, rén, 人, ID),
+    call_slot(last_answered(ID, LastAnsweredTimeID)), call_slot(time_term(LastAnsweredTimeID, Date, Time)),
+    call_slot(answer(obj_2)),
+    call_slot(last_answered(obj_2, A)), call_slot(time_term(A, Date2, Time2)).
+
+% ?- deck_example(DeckID), call_slot(oldest_flashcard(DeckID, Oldest)).
+%@ Correct to: "chinese_example:deck_example(DeckID)"? yes
+%@ Correct to: "core:call_slot(oldest_flashcard(DeckID,Oldest))"? yes
+%@ DeckID = obj_5,
+%@ Oldest = obj_2 ;
+%@ false.
+
+% ?- flashcard_answer_update_example(ID, Date, Time, Date2, Time2).
+%@ Correct to: "chinese_example:flashcard_answer_update_example(ID,Date,Time,Date2,Time2)"? yes
+%@ ID = obj_7,
 %@ Date = 2000/1/1,
-%@ Time = 0:0.
-
-% ?- call_slot(show(obj_2, Hanzi)).
-%@ Correct to: "core:call_slot(show(obj_2,Hanzi))"? yes
-%@ Hanzi = 人.
-
-% ?- call_slot(answer(obj_2)).
-
-% ?- call_slot(last_answered(obj_2, A)), call_slot(time_term(A, Date, Time)).
-%@ Correct to: "core:call_slot(last_answered(obj_2,A))"? yes
-%@ Correct to: "core:call_slot(time_term(A,Date,Time))"? yes
-%@ A = obj_1,
-%@ Date = 2000/1/1,
-%@ Time = 0:0.
-
-% ?- call_slot(last_shown(obj_2, A)), call_slot(time_term(A, Date, Time)).
-%@ Correct to: "core:call_slot(last_shown(obj_2,A))"? yes
-%@ Correct to: "core:call_slot(time_term(A,Date,Time))"? yes
-%@ A = obj_3,
-%@ Date = 2025/5/25,
-%@ Time = 21:35.
-
-% ?- flashcards(FlashcardIDs).
-
-% ?- oldest_flashcard(ID).
+%@ Time = 0:0,
+%@ Date2 = 2025/5/25,
+%@ Time2 = 22:20 .
 
 % ?- qsave_program("../../chinese_flashcards", [stand_alone(true)]).
 %@ % Disabled autoloading (loaded 48 files)

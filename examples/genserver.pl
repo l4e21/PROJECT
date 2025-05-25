@@ -35,11 +35,12 @@ server_object_test(ServerID) :-
 
 
 % ?- server_object_init(ServerID, Slots), server_object_test(ServerID).
-%@ Correct to: "server_example:server_object_init(ServerID,Slots)"? yes
-%@ Correct to: "server_example:server_object_test(ServerID)"? yes
+%@ Correct to: "genserver_example:server_object_init(ServerID,Slots)"? yes
+%@ Correct to: "genserver_example:server_object_test(ServerID)"? yes
 %@ 0
 %@ 1
 %@ ServerID = obj_1,
-%@ Slots = [handle_message(_, print, _A, _A)-(print(_A), nl), handle_message(_, inc, _B, _C)-(_C is _B+1), server_loop(_D, _E)-(thread_get_message(_E, _F), call_slot(state(_D, _G)), call_slot(handle_message(_D, _F, _G, _H)), call_slot(make_slots(..., ..., ...)), call_slot(server_loop(..., ...))), start(_I, _J)-(message_queue_create(_J), thread_create(call_slot(server_loop(_I, _J)), _, [detached])), state(_, 0)-true].
+%@ Slots = [handle_message(_, print, _A, _A)-(print(_A), nl), handle_message(_, inc, _B, _C)-(_C is _B+1), server_loop(_D, _E)-(thread_get_message(_E, _F), call_slot(state(_D, _G)), call_slot(handle_message(_D, _F, _G, _H)), call_slot(make_slots(..., ..., ...)), call_slot(server_loop(..., ...))), start(_I, _J)-(message_queue_create(_J), thread_create(call_slot(server_loop(_I, _J)), _, [detached])), state(_, 0)-true] ;
+%@ false.
 
 
