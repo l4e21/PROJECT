@@ -29,6 +29,7 @@ server_object_test(ServerID) :-
     thread_send_message(Queue, inc),
     thread_send_message(Queue, print).
 
+
 % ?- server_object_init(ServerID, Slots), server_object_test(ServerID).
 %@ Correct to: "server_example:server_object_init(ServerID,Slots)"? yes
 %@ Correct to: "server_example:server_object_test(ServerID)"? yes
