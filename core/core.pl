@@ -24,4 +24,4 @@ slot(root, make_slots(Self, ID, [(SlotHead, SlotBody)|Slots]),
      (asserta(slot(ID, SlotHead, SlotBody)),
       call_slot(make_slots(Self, ID, Slots)))).
 
-% ?- qsave_program()
+% ?- qsave_program(mop, [stand_alone(true)]).
