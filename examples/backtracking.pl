@@ -8,12 +8,12 @@ backtracking_object_init(ObjID) :-
                        ObjID)).
 
 
-% ?- backtracking_object_init(ObjID), call_slot(val(ObjID, X)).
-%@ Correct to: "backtracking_example:backtracking_object_init(ObjID)"? yes
-%@ Correct to: "core:call_slot(val(ObjID,X))"? yes
-%@ ObjID = obj_1,
+% ?- backtracking_object_init(_ObjID), call_slot(val(_ObjID, X)).
+%@ Correct to: "backtracking_example:backtracking_object_init(_ObjID)"? yes
+%@ Correct to: "core:call_slot(val(_ObjID,X))"? yes
+%@ _ObjID = obj_1,
 %@ X = 1 ;
-%@ ObjID = obj_1,
+%@ _ObjID = obj_1,
 %@ X = 2 ;
-%@ ObjID = obj_1,
+%@ _ObjID = obj_1,
 %@ X = 3.
