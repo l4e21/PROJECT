@@ -98,5 +98,16 @@ flashcard_answer_update_example(ID, LastShownDate, LastShownDate2) :-
 % ?- call_slot(last_shown(obj_3, D)).
 
 % ?- flashcard_answer_update_example(ID, Date1, Date2).
+%@ ID = obj_1,
+%@ Date1 = date(2000, 1, 1, 0, 0, 0.0, 0, 'GMT', false),
+%@ Date2 = date(2025, 5, 26, 13, 5, 40.36020636558533, -3600, 'BST', true) ;
+%@ ID = obj_1,
+%@ Date1 = Date2, Date2 = date(2000, 1, 1, 0, 0, 0.0, 0, 'GMT', false) ;
+%@ false.
 
 % ?- qsave_program("../../chinese_flashcards", [stand_alone(true)]).
+
+
+%% 2 kinds of slot
+%% Immutable -> Backtracking available, monotonic, can have multiple existing for a given time poeriod
+%% Faux-mutable -> Still Monotonic, but there's some concept of a 'latest' slot that must be fetched explicitly and not by control flow. E.G., get the max based on the timestamp associated with the slot... perhaps uses batch for this?
