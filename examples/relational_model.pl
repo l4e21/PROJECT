@@ -58,3 +58,11 @@ table_init(ID, Attributes) :-
 %@ Y = metaobject(_, root),
 %@ Z = true.
 
+% ?- call_slot(metaobject(A, root)).
+%@ Correct to: "core:call_slot(metaobject(A,root))"? yes
+%@ A = obj_1 ;
+%@ false.
+%@ Correct to: "core:call_slot(metaobject(_,root))"? yes
+%@ true ;
+%@ false.
+
