@@ -3,7 +3,7 @@
 
 I wrote this 'project' (a portmanteau of PROLOG and Object) because
 
-1. I was tired of writing boilerplate over and over in PROLOG for what were essentially objects.
+1. I was tired of writing boilerplate over and over in PROLOG for what were essentially objects. PROLOG overuses ordinals IMO and this violates the third relational manifesto.
 
 2. Logtalk doesn't support qsave very well, which I generally make extensive use of (DON'T WRITE DEAD SYSTEMS! Seriously).
 
@@ -12,6 +12,6 @@ I wrote this 'project' (a portmanteau of PROLOG and Object) because
 4. I wanted something lightweight + easy to understand for an expert user.
 
 
-A basic metaobject protocol is provided with inheritance, good integration with PROLOG, and a simple dispatch shell. An image is also provided. Memory is currently managed manually, but hopefully eventually I will add a garbage collector.
+A basic metaobject protocol is provided with inheritance, good integration with PROLOG, and a simple dispatch shell. An image is also provided. Memory is currently managed manually, but hopefully eventually I will add a garbage collector. There is no static inference or optimisation for now.
 
 An example harness for example-driven development will be coming soon. 
