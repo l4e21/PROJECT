@@ -13,3 +13,5 @@ I wrote this 'project' (a portmanteau of PROLOG and Object) because
 
 
 A basic metaobject protocol is provided with inheritance, good integration with PROLOG, and a simple dispatch shell. An image is also provided. Memory is currently managed manually, but hopefully eventually I will add a garbage collector.
+
+An example harness for example-driven development will be coming soon. 
