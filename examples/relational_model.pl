@@ -8,6 +8,7 @@
 %% inside of an object-oriented relational model (PROJECT)
 %% inside of a purely relational model (PROLOG)
 
+attributes_to_methods([], []).
 attributes_to_methods([AttrDict|Attributes], AttrMethods) :-
     get_dict(name, AttrDict, AttrName),
     get_dict(type, AttrDict, AttrType),
@@ -33,7 +34,7 @@ table_factory_init(FactoryID) :-
                              PutRow = (put(TableSelf, Row), (call_slot(validate_row(TableSelf, Row)),
                                                              call_slot(make_slots(Self, TableSelf, [(row(_, Row), true)])))),
                              relational_model_example:attributes_to_methods(Attributes, AttrMethods),
-                             call_slot(make_slots(Self, TableID, [PutRow, ValidateRow|AttrMethods])))),
+                             call_slot(make_slots(Self, TableID, [ValidateRow, PutRow|AttrMethods])))),
                            (inherits(Self, root), true)
                        ],
                       FactoryID)).
@@ -45,8 +46,7 @@ table_factory_init(FactoryID) :-
 %@ Correct to: "core:slot(TableID,row(_,Row),_)"? yes
 %@ ID = obj_1,
 %@ TableID = table_obj_1,
-%@ Row = _{id:3} ;
-%@ false.
+%@ Row = _{id:3} 
 
 % ?- table_init(ID, [_{name: id, type: integer, key: true}]), call_slot(put(ID, _{id: 3})).
 
@@ -56,4 +56,3 @@ table_factory_init(FactoryID) :-
 % ?- slot(obj_1, Y, Z).
 
 % ?- call_slot(metaobject(A, root)).
-
