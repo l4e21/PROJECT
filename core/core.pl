@@ -28,3 +28,6 @@ slot(root, make_slots(Self, ID, [(SlotHead, SlotBody)|Slots]),
       call_slot(make_slots(Self, ID, Slots)))).
 
 % ?- qsave_program(mop, [stand_alone(true)]).
+%@ % Disabled autoloading (loaded 39 files)
+%@ % Disabled autoloading (loaded 0 files)
+%@ true.
