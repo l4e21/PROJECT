@@ -19,6 +19,7 @@ call_slot(CallerID, SlotHead) :-
 %% The only starting object is root, a metaobject which determines how new objects are created.
 slot(root, make_obj(Self, Slots, ID),
      (gensym(obj_, ID),
+      asserta(slot(ID, metaobject(_, Self), true)),
       call_slot(make_slots(Self, ID, Slots)))).
 
 slot(root, make_slots(_Self, _, []), true).
