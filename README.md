@@ -1,5 +1,5 @@
 
-* PROJECT : A Minimalist Metaobject Protocol for PROLOG
+# PROJECT : A Minimalist Metaobject Protocol for PROLOG
 
 I wrote this 'project' (a portmanteau of PROLOG and Object) because
 
@@ -15,3 +15,6 @@ I wrote this 'project' (a portmanteau of PROLOG and Object) because
 A basic metaobject protocol is provided with inheritance, good integration with PROLOG, and a simple dispatch shell. Memory is currently managed manually, but hopefully eventually I will add a garbage collector. There is no static inference or optimisation for now.
 
 An example harness for example-driven development will be coming soon. An image is provided.
+
+
+To install, please run `swipl pack install .`

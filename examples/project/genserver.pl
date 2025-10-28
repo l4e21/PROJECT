@@ -1,4 +1,4 @@
-:- module('project/examples/genserver', []).
+:- module('examples/project/genserver', []).
 
 :- use_module(library(project), [call_slot/1, slot/3]).
 

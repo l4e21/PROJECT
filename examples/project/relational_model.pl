@@ -1,4 +1,4 @@
-:- module('project/examples/relational_model', []).
+:- module('examples/project/relational_model', []).
 
 :- use_module(library(project), [call_slot/1, slot/3]).
 

@@ -1,4 +1,4 @@
-:- module('project/examples/delegation', []).
+:- module('examples/project/delegation', []).
 
 :- use_module(library(project), [call_slot/1, slot/3]).
 

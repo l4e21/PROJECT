@@ -1,4 +1,4 @@
-:- module('project/examples/chinese', []).
+:- module('examples/project/chinese', []).
 
 :- use_module(library(project), [call_slot/1, slot/3]).
 :- use_module(library(clpfd)).

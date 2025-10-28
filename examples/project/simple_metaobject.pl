@@ -1,4 +1,4 @@
-:- module('project/examples/simple_metaobject', []).
+:- module('examples/project/simple_metaobject', []).
 
 :- use_module(library(project), [call_slot/1, slot/3]).
 
@@ -26,11 +26,3 @@ simple_metaobject_make_object(MetaObjectID, NewObj, OldCounter, NewCounter) :-
     call_slot(counter(MetaObjectID, NewCounter)).
 
 % ?- simple_metaobject_init(MetaID, Slots), simple_metaobject_make_object(MetaID, NewObj, OldCounter, NewCounter).
-%@ Correct to: "simple_metaobject_example:simple_metaobject_init(MetaID,Slots)"? yes
-%@ Correct to: "simple_metaobject_example:simple_metaobject_make_object(MetaID,NewObj,OldCounter,NewCounter)"? yes
-%@ MetaID = obj_1,
-%@ Slots = [counter(_, 0)-true, inherits(_, root)-true, make_obj(_A, _B, _C)-(call_slot(make_obj(root, _B, _C)), call_slot(counter(_A, _D)), _E is _D+1, call_slot(make_slots(_A, _A, [...])))],
-%@ NewObj = obj_2,
-%@ OldCounter = 0,
-%@ NewCounter = 1 ;
-%@ false.
