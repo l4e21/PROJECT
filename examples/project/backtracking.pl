@@ -1,6 +1,6 @@
-:- module(backtracking_example, []).
+:- module('project/examples/backtracking', []).
 
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(project, [call_slot/1, slot/3]).
 
 backtracking_object_init(ObjID) :-
     call_slot(make_obj(root,

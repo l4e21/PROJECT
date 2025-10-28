@@ -1,7 +1,6 @@
+:- module('project/examples/simple_metaobject', []).
 
-:- module(simple_metaobject_example, []).
-
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(library(project), [call_slot/1, slot/3]).
 
 %% A simple counter metaobject
 simple_metaobject_init(MetaObjectID, Slots) :-

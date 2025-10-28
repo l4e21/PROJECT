@@ -1,6 +1,6 @@
-:- module(delegation_example, []).
+:- module('project/examples/delegation', []).
 
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(library(project), [call_slot/1, slot/3]).
 
 dog_init(DogID) :-
     call_slot(make_obj(root,
@@ -14,11 +14,4 @@ fido_init(DogID, FidoID) :-
 
 
 % ?- dog_init(DogID), fido_init(DogID, FidoID), call_slot(woof(FidoID)).
-%@ Correct to: "delegation_example:dog_init(DogID)"? yes
-%@ Correct to: "delegation_example:fido_init(DogID,FidoID)"? yes
-%@ Correct to: "core:call_slot(woof(FidoID))"? yes
-%@ obj_2": woof!"
-%@ DogID = obj_1,
-%@ FidoID = obj_2 ;
-%@ false.
 

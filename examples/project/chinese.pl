@@ -1,6 +1,6 @@
-:- module(chinese_example, []).
+:- module('project/examples/chinese', []).
 
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(library(project), [call_slot/1, slot/3]).
 :- use_module(library(clpfd)).
 
 default_date(Stamp) :-

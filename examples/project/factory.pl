@@ -1,7 +1,7 @@
 
-:- module(factory_example, []).
+:- module('project/examples/factory', []).
 
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(library(project), [call_slot/1, slot/3]).
 
 flashcard_init(ID, Slots) :-
     call_slot(make_obj(root, [(card_name(_Self, ren), true)], ID)),

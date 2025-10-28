@@ -1,6 +1,6 @@
-:- module(genserver_example, []).
+:- module('project/examples/genserver', []).
 
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(library(project), [call_slot/1, slot/3]).
 
 %% The sort of server we might want to produce via a genserver~
 server_object_init(ServerID, Slots) :-

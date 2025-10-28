@@ -1,7 +1,6 @@
+:- module('project/examples/relational_model', []).
 
-:- module(relational_model_example, []).
-
-:- use_module("../core/core.pl", [call_slot/1, slot/3]).
+:- use_module(library(project), [call_slot/1, slot/3]).
 
 %% I heard you like relational models
 %% so I put a simplified relational model (this example)
